@@ -1,0 +1,18 @@
+<h2 class="row mb-1 col-12">Calculate humidity related values</h2>
+
+<form [formGroup]="humidityFormGroup">
+  <div>
+    <div class="row form-group col-8">
+      <label for="temperature">Temperature in degrees</label>
+      <input type="text" class="form-control" id="temperature" placeholder="20" formControlName="temperature">
+    </div>
+    <div class="row form-group col-8">
+      <label for="humidity">Humidity relative in percent</label>
+      <input type="text" class="form-control" id="humidity" placeholder="50" formControlName="humidity">
+    </div>
+  </div>
+  <div class="mt-4">
+    <button type="submit" class="btn btn-primary" (click)="calculateData()">Calculate</button>
+  </div>
+
+</form>

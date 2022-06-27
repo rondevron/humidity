@@ -3,14 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HumidityCalculationComponent } from './components/humidity-calculation/humidity-calculation.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HumidityCalculationComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

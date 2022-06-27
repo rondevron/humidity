@@ -1,5 +1,6 @@
 package de.rondevron.humidity.services;
 
+import de.rondevron.humidity.models.HumidityDTO;
 import de.rondevron.humidity.models.HumidityInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,11 @@ public class HumidityService {
 //        return new HumidityInfoDTO(temperature, relativeHumidity, absHumidity);
 //    }
 
-    public HumidityInfoDTO calculateHumidityAbsolute(final double temperature, double relativeHumidity) {
+    public HumidityInfoDTO calculateHumidityAbsolute(final HumidityDTO humidity) {
         double a;
         double b;
+        double temperature = humidity.getTemperature();
+        double relativeHumidity = humidity.getHumidity();
 
         if (temperature >= 0.0) { // T >= 0 °C
             a = 7.5;
