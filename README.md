@@ -35,3 +35,7 @@ Additionally, a simple UI application based on Angular is available to display t
     
     # build and run
     ng serve
+
+## API
+
+http://localhost:8080/swagger-ui/index.html
