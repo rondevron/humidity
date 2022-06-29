@@ -1,29 +1,22 @@
 package de.rondevron.humidity.services;
 
+import de.rondevron.humidity.daos.HumidityRepository;
 import de.rondevron.humidity.models.HumidityDTO;
+import de.rondevron.humidity.models.HumidityEntity;
 import de.rondevron.humidity.models.HumidityInfoDTO;
+import de.rondevron.humidity.utils.HumidityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class HumidityService {
 
-//    public HumidityInfoDTO calculateHumidityAbsolute2(final double temperature, double relativeHumidity) {
-//        if (relativeHumidity > 1) {
-//            relativeHumidity = 1;
-//        }
-//        // Pw = e / (Rw * T) -> absolute humidity = steam (water vapour) / (gas constant * absolute Temperature)
-//        // x = RG / RD = (φ x ps) / p - φ x ps
-//        //double ps = 1936.3; // N/m2, saturation pressure of water vapour
-//        double ps = 0.02986;
-//        double rd = 461.52; // J/(kg K), Nm/kg K, gas constant of water vapour
-//        double p = 0.9552; // bar
-//        //double waterVapour = relativeHumidity * ps;
-//
-//        double absHumidity = (relativeHumidity * ps) / (p - relativeHumidity * ps);
-//        return new HumidityInfoDTO(temperature, relativeHumidity, absHumidity);
-//    }
+    private final HumidityRepository humidityRepository;
+
 
     public HumidityInfoDTO calculateHumidityAbsolute(final HumidityDTO humidity) {
         double a;
@@ -51,5 +44,22 @@ public class HumidityService {
         double AF2 = Math.pow(10.0, 5) * mw / R * SDD / TK;
 
         return new HumidityInfoDTO(temperature, relativeHumidity, AF, AF2, TD);
+    }
+
+    public List<HumidityDTO> getHumidities() {
+        return humidityRepository.findAll()
+                .stream()
+                .map(HumidityMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public HumidityDTO saveHumidityData(HumidityDTO humidityDTO) {
+        final HumidityEntity obj = new HumidityEntity(
+                humidityDTO.getTemperature(),
+                humidityDTO.getHumidity()
+        );
+        humidityRepository.save(obj);
+
+        return HumidityMapper.map(obj); // ToDo HumidityInfoDTO e.g. Date
     }
 }
